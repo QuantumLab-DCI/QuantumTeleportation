@@ -1,93 +1,93 @@
 <div align="center">
-  <h1>Quantum Teleportation</h1>
-  <p><strong>An educational native web project for exploring quantum teleportation on Qollab.</strong></p>
+  <h1>Teletransportación cuántica</h1>
+  <p><strong>Un proyecto web educativo y nativo para explorar la teletransportación cuántica en Qollab.</strong></p>
   <p>
-    <a href="https://qollab.xyz/"><img src="https://img.shields.io/badge/Qollab-Execution-89b4fa.svg?style=for-the-badge" alt="Qollab execution target"></a>
-    <a href="https://qiskit.org/"><img src="https://img.shields.io/badge/Qiskit-2.5.2%20to%20%3C3.0-6929C4.svg?style=for-the-badge&logo=qiskit&logoColor=white" alt="Qiskit 2.5.2 to below 3.0"></a>
-    <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-Qollab%20Runtime-3776AB.svg?style=for-the-badge&logo=python&logoColor=white" alt="Python in the Qollab runtime"></a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"><img src="https://img.shields.io/badge/JavaScript-Native-F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black" alt="Native JavaScript"></a>
+    <a href="https://qollab.xyz/"><img src="https://img.shields.io/badge/Qollab-Ejecuci%C3%B3n-89b4fa.svg?style=for-the-badge" alt="Qollab como plataforma de ejecución"></a>
+    <a href="https://qiskit.org/"><img src="https://img.shields.io/badge/Qiskit-2.5.2%20a%20%3C3.0-6929C4.svg?style=for-the-badge&logo=qiskit&logoColor=white" alt="Qiskit 2.5.2 hasta una versión anterior a 3.0"></a>
+    <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-Runtime%20de%20Qollab-3776AB.svg?style=for-the-badge&logo=python&logoColor=white" alt="Python en el entorno de ejecución de Qollab"></a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"><img src="https://img.shields.io/badge/JavaScript-Nativo-F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript nativo"></a>
   </p>
   <p>
-    <a href="#context">Context</a> ·
-    <a href="#interface">Interface</a> ·
-    <a href="#architecture">Architecture</a> ·
-    <a href="#run">Run</a> ·
-    <a href="#outputs">Outputs</a> ·
-    <a href="#current-limits">Limits</a>
+    <a href="#contexto">Contexto</a> ·
+    <a href="#interfaz">Interfaz</a> ·
+    <a href="#arquitectura">Arquitectura</a> ·
+    <a href="#ejecución">Ejecución</a> ·
+    <a href="#salidas">Salidas</a> ·
+    <a href="#límites-actuales">Límites</a>
   </p>
 </div>
 
-> **Status:** Educational skeleton<br>
-> **Execution:** Qollab and IonQ integration not yet verified<br>
-> **Support:** This effort is supported by Qollab & IonQ.
+> **Estado:** Esqueleto educativo<br>
+> **Ejecución:** Integración con Qollab e IonQ aún no verificada<br>
+> **Apoyo:** This effort is supported by Qollab & IonQ.
 
-An educational, native web skeleton for exploring quantum teleportation on Qollab. It intentionally leaves the team's narrative, mathematics, notebook adaptation, fixed input state, and shot count clearly marked as pending.
+Un esqueleto web educativo y nativo para explorar la teletransportación cuántica en Qollab. Mantiene deliberadamente como pendientes la narrativa del equipo, las matemáticas, la adaptación del cuaderno, el estado de entrada fijo y la cantidad de ejecuciones.
 
 This effort is supported by Qollab & IonQ.
 
 ---
 
-### Context
+### Contexto
 
-The page introduces classical transmission, the quantum copying and measurement challenge, and teleportation before presenting Example, Math, and Code views. The five analogy labels are scaffolding only; the team will supply the explanation and its limits.
-
----
-
-### Interface
-
-- One vertically scrolling page with section links.
-- One study box with three colored tabs: Example, Math, and Code.
-- Catppuccin Mocha colors and responsive native CSS.
-- Vertical explanation → code → output placeholders.
-- A visible `Pending` execution state; no placeholder is presented as a computed result.
+La página introduce la transmisión clásica, el desafío de la copia y la medición cuánticas, y la teletransportación antes de presentar las vistas Ejemplo, Matemáticas y Código. Las cinco etiquetas de la analogía son solo una estructura inicial; el equipo aportará la explicación y sus límites.
 
 ---
 
-### Architecture
+### Interfaz
 
-Static templates live in `frontend/`. `main.js` mounts them and owns browser interactions. `backend/teleportation.py` defines the future Qollab execution boundary. See [the architecture](docs/architecture.md) and [development guide](docs/development.md).
+- Una página con desplazamiento vertical y enlaces a sus secciones.
+- Un cuadro de estudio con tres pestañas de colores: Ejemplo, Matemáticas y Código.
+- Colores Catppuccin Mocha y CSS nativo adaptable.
+- Marcadores verticales para explicación → código → salida.
+- Un estado de ejecución `Pendiente` visible; ningún marcador se presenta como un resultado calculado.
 
 ---
 
-### Run
+### Arquitectura
 
-For a local interface preview, run:
+Las plantillas estáticas se encuentran en `frontend/`. `main.js` las monta y controla las interacciones del navegador. `backend/teleportation.py` define el futuro límite de ejecución con Qollab. Consulta [la arquitectura](docs/architecture.md) y [la guía de desarrollo](docs/development.md).
+
+---
+
+### Ejecución
+
+Para obtener una vista previa local de la interfaz, ejecuta:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then open <http://localhost:8000>. This preview does not run Qiskit.
+Después, abre <http://localhost:8000>. Esta vista previa no ejecuta Qiskit.
 
-For Qollab, upload the project, select a backend, and press **Run**. Quantum execution is still pending until the notebook circuit is added.
-
----
-
-### Outputs
-
-The Code view reserves text-only containers for state preparation, entanglement, and execution. A future successful `run_teleportation(backend)` call will return those three string outputs in a plain dictionary. Until then, all containers remain `Pending`.
+En Qollab, carga el proyecto, selecciona un backend y presiona **Ejecutar**. La ejecución cuántica seguirá pendiente hasta que se añada el circuito del cuaderno.
 
 ---
 
-### Current limits
+### Salidas
 
-- The original educational narrative, equations, analogy mapping, and notebook excerpts are not included.
-- The quantum job is deliberately not submitted and no result is fabricated.
-- Qollab bridge behavior, controlled failure visibility, local simulator execution, and IonQ execution are **not verified for this project**.
-- Dynamic-circuit compatibility with the selected IonQ backend needs an explicit platform probe.
-- Learning outcomes require human review after the team adds the educational content.
+La vista Código reserva contenedores de texto para la preparación del estado, el entrelazamiento y la ejecución. Una futura llamada correcta a `run_teleportation(backend)` devolverá esas tres salidas de texto en un diccionario simple. Hasta entonces, todos los contenedores permanecerán como `Pendiente`.
 
 ---
 
-### Dependencies and attribution
+### Límites actuales
 
-- Python: `qiskit>=2.5.2,<3.0.0`, as required by the project specification and documented Qollab runtime range.
-- Browser: [KaTeX 0.16.22](https://katex.org/) CSS distributed by [jsDelivr](https://www.jsdelivr.com/) for server-rendered equation markup.
-- Palette: [Catppuccin Mocha](https://github.com/catppuccin/catppuccin).
-- Development assistance: OpenCode and AI-assisted implementation were used to create this skeleton; team-authored notebook material remains pending.
+- No se incluyen la narrativa educativa original, las ecuaciones, la correspondencia de la analogía ni los fragmentos del cuaderno.
+- El trabajo cuántico no se envía deliberadamente y no se fabrica ningún resultado.
+- El comportamiento del puente de Qollab, la visibilidad de fallos controlados y la ejecución en el simulador local y en IonQ **no están verificados para este proyecto**.
+- La compatibilidad de los circuitos dinámicos con el backend de IonQ seleccionado requiere una prueba explícita en la plataforma.
+- Los resultados de aprendizaje requieren una revisión humana después de que el equipo añada el contenido educativo.
 
 ---
 
-### License
+### Dependencias y atribución
 
-Licensed under the [MIT License](LICENSE).
+- Python: `qiskit>=2.5.2,<3.0.0`, según lo exige la especificación del proyecto y el intervalo documentado del entorno de ejecución de Qollab.
+- Navegador: CSS de [KaTeX 0.16.22](https://katex.org/) distribuido por [jsDelivr](https://www.jsdelivr.com/) para el marcado de ecuaciones generado en el servidor.
+- Paleta: [Catppuccin Mocha](https://github.com/catppuccin/catppuccin).
+- Asistencia de desarrollo: se utilizaron OpenCode y desarrollo asistido por IA para crear este esqueleto; el material del cuaderno creado por el equipo sigue pendiente.
+
+---
+
+### Licencia
+
+Distribuido bajo la [licencia MIT](LICENSE).

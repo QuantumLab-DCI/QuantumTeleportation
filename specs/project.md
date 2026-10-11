@@ -4,7 +4,7 @@
 
 Build a simple educational application for Qollab. The first implementation is a working skeleton that the team can fill progressively with explanations, the letter analogy, mathematics, and content adapted from an existing Python notebook created by one of the authors.
 
-Use plain HTML, CSS, JavaScript, and Python with Qiskit. Use English filenames, function names, variables, comments, documentation, and initial interface labels. Keep functions small and straightforward.
+Use plain HTML, CSS, JavaScript, and Python with Qiskit. Use English filenames, function names, variables, and source comments. Use Spanish for the README and user-facing interface labels. Keep functions small and straightforward.
 
 ## 2. Project structure and ownership
 
@@ -38,10 +38,10 @@ quantum-teleportation/
 ## 3. Page and navigation requirements
 
 - **FR-01:** Render one long page with normal vertical scrolling.
-- **FR-02:** Start with the centered title `Quantum Teleportation` and ordinary anchor links: `Context`, `Quantum Challenge`, `Teleportation`, `Example`, `Math`, and `Code`.
+- **FR-02:** Start with the centered title `Teletransportación cuántica` and ordinary anchor links: `Contexto`, `Desafío cuántico`, `Teletransportación`, `Ejemplo`, `Matemáticas`, and `Código`.
 - **FR-03:** Present classical copying/transmission, the quantum copying/measurement problem, and the introduction to teleportation, in that order.
-- **FR-04:** End with one study box containing exactly three tabs: `Example`, `Math`, and `Code`. Select `Example` initially and show one colored panel at a time.
-- **FR-05:** Context links use browser-native same-page navigation. Links to `Example`, `Math`, or `Code` select that tab and scroll to the shared study box.
+- **FR-04:** End with one study box containing exactly three tabs: `Ejemplo`, `Matemáticas`, and `Código`. Select `Ejemplo` initially and show one colored panel at a time.
+- **FR-05:** Context links use browser-native same-page navigation. Links to `Ejemplo`, `Matemáticas`, or `Código` select that tab and scroll to the shared study box.
 - **FR-06:** Show the five analogy steps vertically in `Example`: establish the connection, prepare the message, finalize the letter, send the letter, and reorder/read. All five are visible together.
 - **FR-07:** Present mathematical explanations and equations vertically in `Math`; use KaTeX for LaTeX rendering.
 - **FR-08:** Present repeated explanation → Python code → output blocks vertically in `Code`. Start with placeholder blocks for state preparation, entanglement, and execution. The team can add blocks following the same pattern.
@@ -151,7 +151,7 @@ Before hackathon submission:
 
 ### Design status
 
-**READY for one tabbed study box (2026-10-11).** The user clarified that only the final Example/Math/Code area should be one colored tabbed box; the introductory page remains a simple notes layout. Independent QA confirmed the requirements, accessibility model, stable output IDs, and no-rerun lifecycle are sufficient for implementation. Qollab/IonQ execution remains explicitly **NOT VERIFIED**.
+**READY for one tabbed study box and Spanish presentation (2026-10-11).** The user clarified that only the final Example/Math/Code area should be one colored tabbed box; the introductory page remains a simple notes layout. The later localization request supersedes the initial English presentation requirement: README prose and user-facing frontend copy are Spanish, while code identifiers, filenames, source comments, contract keys, and the required attribution remain unchanged. Independent QA confirmed this localization is bounded and preserves accessibility, stable output IDs, and the no-rerun lifecycle. Qollab/IonQ execution remains explicitly **NOT VERIFIED**.
 
 ### Tasks and traceability
 
@@ -165,6 +165,8 @@ Before hackathon submission:
 
 ### Additional observable checks
 
+- README prose, visible interface copy, and accessible names are Spanish; source identifiers, DOM IDs, output keys, filenames, Python snippets, and CSS comments remain unchanged.
+- The exact attribution `This effort is supported by Qollab & IonQ.` remains visible.
 - Tabs use the ARIA tab pattern with visible focus and Left/Right/Home/End keyboard selection.
 - Review at a 320 CSS-pixel viewport; only code/output containers may scroll horizontally.
 - Output insertion is text-only and follows the DOM's three block IDs.
