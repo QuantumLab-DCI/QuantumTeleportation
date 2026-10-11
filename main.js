@@ -1,4 +1,4 @@
-import { contextSectionTemplate } from './frontend/context_section.js';
+import { renderContextSection } from './frontend/context_section.js';
 import { exampleTabTemplate } from './frontend/example_tab.js';
 import { mathTabTemplate } from './frontend/math_tab.js';
 import { codeTabTemplate } from './frontend/code_tab.js';
@@ -10,7 +10,7 @@ function mountTemplate(mountId, template) {
 }
 
 function mountPage() {
-  mountTemplate('context-mount', contextSectionTemplate);
+  mountTemplate('context-mount', renderContextSection());
   mountTemplate('example-mount', exampleTabTemplate);
   mountTemplate('math-mount', mathTabTemplate);
   mountTemplate('code-mount', codeTabTemplate);
