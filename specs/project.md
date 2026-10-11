@@ -1,5 +1,9 @@
 # Quantum Teleportation — Project Specification
 
+## Develop pull integration repair (2026-10-11)
+
+DEV-01: preserve local notebook work and incoming team narrative while restoring the existing Example template/navigation contract. Coordinator task DEV-I is limited to integrating origin/develop and repairing frontend/example_tab.js; no execution or dependency changes. The incoming module exported exampleTabHTML instead of the entry's required exampleTabTemplate and omitted example-panel/example-title. Restore the original export and accessible panel/anchor wrapper without changing narrative. Check: node tests/test_notebook_ui.mjs passed all 27 local browser groups with zero failures, including initial Example, keyboard tabs, anchors and 320px layout. Live Qollab/IonQ remains NOT VERIFIED. User authorized the integration commit; no push or upstream configuration change is included.
+
 ## Localhost loader correction (2026-10-11)
 
 **READY for bounded implementation following independent QA design review.** LOAD-01: mount the page before attempting the Qollab bridge; ordinary static hosting must show navigable content and an explicit execution Error, never fabricated results. LOAD-02: supply an inline favicon. Preserve notebook content and whole-example/proxy contracts.
