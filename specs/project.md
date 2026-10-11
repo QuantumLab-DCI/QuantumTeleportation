@@ -1,5 +1,77 @@
 # Quantum Teleportation — Project Specification
 
+## Localhost loader correction (2026-10-11)
+
+**READY for bounded implementation following independent QA design review.** LOAD-01: mount the page before attempting the Qollab bridge; ordinary static hosting must show navigable content and an explicit execution Error, never fabricated results. LOAD-02: supply an inline favicon. Preserve notebook content and whole-example/proxy contracts.
+
+Task LOAD-I (coordinator): main.js, qollab_bridge.js, frontend/execution_results.js, index.html and existing docs. Task LOAD-QA (QA): tests/test_notebook_ui.mjs and focused QA evidence. Check real unmodified static hosting, no uncaught rejection, navigation after failure, no favicon.ico request, and existing fake-bridge regressions. Qollab dynamic wrapper discovery remains NOT VERIFIED and requires a live probe before platform delivery.
+
+**Delivered locally:** independent Node/Chromium QA passed 27 groups with zero failures, including unmodified static hosting at 1440/320px, handled bridge/missing-wrapper failure, preserved cause, navigation without rerun, no uncaught errors and no favicon.ico request. Syntax and whitespace checks passed. See [focused QA evidence](../docs/qa/localhost-loader.md). Live Qollab wrapper discovery/execution remains NOT VERIFIED; next task is the platform probe, not a local fallback.
+
+## Content-preserving visual refinement (2026-10-11)
+
+**READY for CSS-only implementation.** Independent QA approved the design with conditions: preserve dirty notebook styling, wrap long headings/badges, retain unboxed vertical context, and check narrow-screen reflow. The user requests larger, more attractive typography, especially in context and the five numbered steps, with no educational content changes.
+
+- **VIS-01:** Preserve every existing text, source, output ID, section order, tab and execution behavior. CSS-only change; no new dependencies or runtime contract.
+- **VIS-02:** Use a readable responsive body size (at least 17px at default browser settings), a bounded reading column, larger context headings, prominent existing step badges and generous vertical separation. Keep the introduction unboxed; distinguish the physics explanation with a subtle inset accent, not a grid of cards.
+- **VIS-03:** Retain Catppuccin Mocha and assigned panel backgrounds, visible keyboard focus, reduced-motion support and vertical steps. At 320px, prose must fit without document overflow; code may scroll internally.
+
+| Task | Requirements | Owner / allowed files | Inputs / outputs | Dependencies | Checks |
+| --- | --- | --- | --- | --- | --- |
+| VIS-D | VIS-01–03 | coordinator: specs/project.md, docs/architecture.md | CSS-only design and review outcome | Independent QA design review | No content/runtime changes |
+| VIS-U | VIS-01–03 | ux-frontend: main.css only | Existing context classes → responsive typography, badges and spacing | Reviewed design | CSS review, content preservation, desktop/320px browser when available |
+| VIS-QA | VIS-01–03 | qa: review only | Integrated CSS and unchanged templates | VIS-U | Independent release checks; explicit gaps |
+
+Existing uncommitted notebook and CSS work must be preserved. Qollab/IonQ compatibility and execution are unchanged and remain outside this styling fix.
+
+QA also found a pre-existing unrelated defect: context header links target IDs absent from the current context template. Track this separately; do not claim all six links work or expand the CSS task to alter team markup.
+
+### VIS verification evidence
+
+**Delivered — bounded CSS refinement.** VIS-D, VIS-U and VIS-QA completed. Independent QA reviewed CSS blob `887d7c3b9efd4ba1d20c7185051f04662cdeeb6e` with Node/Chromium CDP against a local presentation fixture using current workspace templates/CSS and navigation, excluding the Qollab Python execution import. Concurrent unrelated notebook changes were preserved; this is not a live-platform test.
+
+- **PASS:** all panels at 1440/768/320px; body 19/17.984/17px, five prominent step badges, wrapped headings, bounded 60rem page and 70ch context, no document overflow, exact assigned panel colors.
+- **PASS:** initial Example, one visible panel, study links, tab ArrowLeft/Right/Home/End, visible 3px focus, Space on math disclosure, reduced-motion behavior and internal long-code scrolling.
+- **PASS:** synthetic large figure, long caption/error and doubled-root-font reflow at 320px. This is layout stress evidence, not result-renderer validation or browser-zoom certification.
+- **PASS:** existing dirty notebook CSS retained; context/example/math templates and index unchanged; content remains identical through navigation. `git diff --check -- main.css` passed independently.
+- **FAIL (pre-existing/out of scope):** three missing context anchor targets noted above.
+- **NOT VERIFIED:** live Qollab/IonQ execution, human visual/learning validation, exhaustive accessibility and other browser engines. No platform or quantum behavior changed in this task.
+
+## Notebook integration (2026-10-11)
+
+**READY for the bounded local notebook slice, not Qollab/IonQ delivery.** Independent QA reviewed the design; coordinator resolved static bridge import, cross-field invariants, stage provenance and check ordering in architecture. The supplied notebook replaces the missing state, shot count and code placeholders. New material uses English as required by AGENTS.md; existing team presentation is preserved.
+
+- **NB-01:** Execute the supplied dynamic protocol as a whole with Q,A,B=0,1,2, amplitudes [0.6,0.8], two ideal Aer experiments of 1024 shots, X conditioned on c1 then Z conditioned on c0. Preserve inverse-preparation verification, not merely a Z-basis measurement.
+- **NB-02:** Present explanations, corresponding source, seven stage outputs and PNG circuit/histogram figures vertically. Stages: state-preparation, entanglement, measurement-preparation, measurement, classical-bits, correction, verification. Explain A Q count order and the verification operation.
+- **NB-03:** Keep the Qollab-injected backend boundary. IonQ documents dynamic if branches as unsupported even on its simulator (https://docs.ionq.com/api-reference/v0.4/openqasm3.md). Do not submit known-unsupported circuits, invent successful platform counts, or silently use coherent controls. Local Aer success plus platform incompatibility is Partial, never a completed Qollab/IonQ demonstration. An approved and verified alternate representation is a separate future task.
+- **NB-04:** Initialize UI before one asynchronous whole-example call. Preserve results across navigation. Render text safely and validate base64 PNGs. Errors remain visible, including platform incompatibility, missing dependencies and bridge rejection.
+
+Quantum research observed the exact notebook locally with Qiskit 2.5.2/Aer 0.17.2: verification {'0':1024}; 104 independent branch fidelity checks passed. Official Qollab docs establish dotted imports, callPromising, toJs and one IonQ job per Run; Qollab's library list references Aer 0.17.2 but project installation and execution remain NOT VERIFIED. No live platform access is available. This bounded implementation does not claim platform readiness; do not wait for unavailable platform evidence to conceal the missing integration.
+
+| Task | Requirements | Owner / allowed files | Contract / dependencies | Checks |
+| --- | --- | --- | --- | --- |
+| NB-Q | NB-01, NB-03 | quantum: backend/*.py, tests/test_teleportation.py | Seven-stage contract in architecture; source export matches execution | Dynamic Aer, independent phase-sensitive oracle, PNG decode, explicit platform incompatibility |
+| NB-U | NB-02, NB-04 | ux-frontend: frontend/code_tab.js, main.css | Seven stable output/figure IDs; source delivered by Python, not duplicated | Syntax, accessible figures, vertical stages, no execution handlers |
+| NB-I | NB-03, NB-04 | coordinator: main.js, frontend/execution_results.js, requirements.txt, README.md, docs/architecture.md, docs/development.md, specs/project.md | Validated plain data, injected backend, exactly one bridge attempt | Bridge fake/controlled failure, result validation, syntax and diff checks |
+| NB-QA | NB-01–NB-04 | qa: tests/test_notebook_ui.mjs, docs/qa/notebook-integration.md | Independent design then integrated release | PASS/FAIL/NOT VERIFIED, no local evidence disguised as Qollab |
+
+Quantum and UI implementation may proceed on disjoint files using the settled architecture; coordinator integrates only after both. Acceptance: exact two local experiments/one bridge call/zero injected-backend submissions; all four branches with phase-sensitive independent fidelity tolerance 1e-9 and missing-X/Z negative controls; PNG decode; missing dependencies, rejected bridge, malformed envelope and invalid PNG produce Error before insertion; figure-only failure preserves counts and shows warning; repeated Run and navigation do not retain stale results or rerun; keyboard tabs/header links and 320px layout checked separately from static syntax. Live Qollab loader, Aer installation, conversion, logs and IonQ remain NOT VERIFIED until platform access is available.
+
+### Notebook slice completion and evidence
+
+**NB-Q, NB-U, NB-I and NB-QA completed for the bounded local scope.** Coordinator additionally restored the three missing context anchor IDs without changing team narrative. Independent QA found and retested invalid-PNG defects; the renderer now checks raster/chunk bounds and CRC32, then actual browser decoding before displaying computed results.
+
+- **PASS:** 11 local quantum tests, including 104 independent branch checks (26 inputs × 4 outcomes, fidelity >= 1-1e-9), phase-sensitive dynamic runs, omitted-X/Z negative controls, controlled failures and logging-handler isolation. Supplied input verification returned `{'0': 1024}`. Circuit barriers, preparation label and copied verification circuit preserved.
+- **PASS:** 23 independent Chromium groups; final two runs passed in normal/reduced-motion modes. Actual Python envelope gives seven exact executed source/output associations and nine decoded PNGs. Mount precedes one fake bridge attempt; navigation does not rerun. Missing dependencies/bridge rejection/malformed contract/truncated or corrupt PNG reset old results and show Error; figure-only failure preserves counts with warning. Keyboard and 320px/1440px layout checked.
+- **PASS:** JavaScript syntax checks and `git diff --check`; README/development/architecture reviewed independently. Reproduction, interpreter/browser overrides and check limitations are in [the QA report](../docs/qa/notebook-integration.md).
+- **NOT VERIFIED:** live Qollab loader, dependencies, Aer browser execution, proxy conversion, PNG transport and Python logging capture. No platform job submitted. IonQ dynamic branches are documented incompatible; no full-platform acceptance claimed. Human learning, publication, public repository URL, demo and event submission remain pending.
+
+**Next task NB-P (quantum; disposable probe only):** use live Qollab access to record runtime versions, imports, whole Aer execution, nested data/PNG conversion, controlled failure/log access and repeated Run. Dependencies: platform access and this envelope. Acceptance: reproducible observed PASS/FAIL evidence, never static-browser evidence. Separately obtain the team's decision on an explicitly labeled IonQ-compatible representation; do not replace the classical-feed-forward lesson or submit this known-incompatible circuit to satisfy a check.
+
+## Initial skeleton specification (historical)
+
+The supplied notebook integration above supersedes the pending execution, three-output contract and dependency decisions below. Earlier localization evidence describes preserved existing team copy, not a requirement to translate newly integrated notebook material. Keep these sections as historical traceability rather than current notebook acceptance.
+
 ## 1. Purpose and scope
 
 Build a simple educational application for Qollab. The first implementation is a working skeleton that the team can fill progressively with explanations, the letter analogy, mathematics, and content adapted from an existing Python notebook created by one of the authors.

@@ -1,93 +1,82 @@
-<div align="center">
-  <h1>Teletransportación cuántica</h1>
-  <p><strong>Un proyecto web educativo y nativo para explorar la teletransportación cuántica en Qollab.</strong></p>
-  <p>
-    <a href="https://qollab.xyz/"><img src="https://img.shields.io/badge/Qollab-Ejecuci%C3%B3n-89b4fa.svg?style=for-the-badge" alt="Qollab como plataforma de ejecución"></a>
-    <a href="https://qiskit.org/"><img src="https://img.shields.io/badge/Qiskit-2.5.2%20a%20%3C3.0-6929C4.svg?style=for-the-badge&logo=qiskit&logoColor=white" alt="Qiskit 2.5.2 hasta una versión anterior a 3.0"></a>
-    <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-Runtime%20de%20Qollab-3776AB.svg?style=for-the-badge&logo=python&logoColor=white" alt="Python en el entorno de ejecución de Qollab"></a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"><img src="https://img.shields.io/badge/JavaScript-Nativo-F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript nativo"></a>
-  </p>
-  <p>
-    <a href="#contexto">Contexto</a> ·
-    <a href="#interfaz">Interfaz</a> ·
-    <a href="#arquitectura">Arquitectura</a> ·
-    <a href="#ejecución">Ejecución</a> ·
-    <a href="#salidas">Salidas</a> ·
-    <a href="#límites-actuales">Límites</a>
-  </p>
-</div>
+# Quantum Teleportation
 
-> **Estado:** Esqueleto educativo<br>
-> **Ejecución:** Integración con Qollab e IonQ aún no verificada<br>
-> **Apoyo:** This effort is supported by Qollab & IonQ.
+**Native educational web project targeting Qollab, with the team's Qiskit teleportation example.**
 
-Un esqueleto web educativo y nativo para explorar la teletransportación cuántica en Qollab. Mantiene deliberadamente como pendientes la narrativa del equipo, las matemáticas, la adaptación del cuaderno, el estado de entrada fijo y la cantidad de ejecuciones.
+[Interface](#interface) · [Execution](#execution) · [Outputs](#outputs) · [Checks](#checks) · [Limits](#limits) · [Attribution](#attribution)
+
+> **Status:** Local dynamic notebook implemented and tested. Live Qollab execution is **NOT VERIFIED**. IonQ does not support this notebook's dynamic conditions; local success is displayed as **Partial**, not a completed platform demonstration.
+>
+> This effort is supported by Qollab & IonQ.
+
+## Interface
+
+One long page introduces the team's context and analogy, followed by one Catppuccin Mocha study box with Example, Math and Code tabs. Example is selected initially. Existing team-authored Spanish narrative is preserved; the newly integrated notebook explanations and source use English.
+
+The Code tab presents seven vertical explanation → executed Python source → text output → figure blocks. There is no cell editor, per-cell execution or step navigator. Tabs and section links neither run Python nor discard results.
+
+## Architecture
+
+- `index.html`, `main.css`, `frontend/`: page, educational material and display-safe rendering.
+- `main.js`: mounting, native navigation/tab interaction and one Qollab bridge call.
+- `backend/teleportation.py`: circuit construction, two ideal Aer experiments, executable source excerpts and in-memory PNG formatting.
+- `requirements.txt`: Python runtime dependencies.
+
+See the canonical [architecture and data contract](docs/architecture.md), [requirements and evidence](specs/project.md), [development guide](docs/development.md), and [independent review](docs/qa/notebook-integration.md).
+
+## Execution
+
+### Qollab target — verification still required
+
+Upload the root files together with `frontend/`, `backend/` and `requirements.txt` to Qollab, select a backend, and Run the whole project. The integration uses the documented static Python namespace import and `run_teleportation.callPromising(backend)`, followed by `toJs()`.
+
+The entry mounts the page before asynchronously loading `qollab_bridge.js`, which retains the documented Python import and whole-example call. **Dynamic wrapper discovery, project loading, dependency installation, Aer browser execution, conversion and log capture have not been exercised on Qollab.** Loading failures are caught for local preview; Qollab's own preprocessing behavior remains unverified.
+
+The injected backend is retained but receives **zero jobs in this bounded slice**. [IonQ documents that dynamic branches are unsupported on all its targets, including its simulator](https://docs.ionq.com/api-reference/v0.4/openqasm3.md). The UI keeps this limitation visible. Unknown backends remain not verified; they are not assumed compatible. No local result is an IonQ result, and no coherent-control circuit is silently substituted.
+
+### Local Python reproduction
+
+In a Python virtual environment:
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 -m unittest discover -s tests -p test_teleportation.py -v
+python3 -c "from backend.teleportation import run_teleportation; r = run_teleportation(None); print(r['outputs']['classical-bits']); print(r['outputs']['verification']); print(r['platform']['message'])"
+```
+
+The test suite was executed with Python 3.12.3, Qiskit 2.5.2, Aer 0.17.2, Matplotlib 3.11.1 and pylatexenc 2.11. These are observed local versions, not promised Qollab versions. The simulator seed is fixed for reproducible screenshots/counts; it does not change the physical protocol.
+
+Run `python3 -m http.server 8000` from the project root and open `http://localhost:8000` for an educational preview. A plain static server does **not** understand the Python import in `qollab_bridge.js`: the page remains usable and Code displays an explicit execution Error. No quantum results are fabricated. Use the independent browser harness described in the development guide for local integration checks; its fake bridge is not platform evidence.
+
+## Outputs
+
+Q = q0 contains `0.6|0⟩ + 0.8|1⟩`; A = q1 is the granddaughter's resource qubit; B = q2 is the grandmother's qubit. Circuit snapshots retain the supplied barriers and show the protocol growing stage by stage. They are construction diagrams, not extra executions or measured intermediate states.
+
+1. The first Aer experiment measures Q into c0 and A into c1 over **1024 shots**. Its histogram displays **A Q**, so the four combinations are approximately equally frequent.
+2. The second experiment applies **X if c1=1, then Z if c0=1**, applies the inverse known preparation to B, and measures B into c2 over **1024 shots**. Ideal verification yields `{'0': 1024}`.
+
+The final bar at zero is **after inverse preparation**; before it, B contains the transferred input state. This is a known-state verification, not tomography of an arbitrary unknown state. Separate experiments need not have identical samples. Actual outputs are inserted as text, never executable HTML; validated PNGs carry alt text and provenance captions.
+
+## Checks
+
+Local evidence includes independent branch/phase oracles, dynamic Aer runs, negative controls for missing corrections, PNG decoding, failure envelopes and browser checks. Reproduction and PASS/FAIL/NOT VERIFIED details are maintained in the [QA report](docs/qa/notebook-integration.md) and [spec](specs/project.md), rather than duplicated here.
+
+## Limits
+
+- Full Qollab execution remains unverified; the required IonQ demonstration is blocked by dynamic-branch incompatibility. A separately approved and explicitly labeled platform representation needs design and live verification.
+- The team's other narrative and math modules are preserved. Remaining educational content, consistency between evolving analogy versions and human learning validation need team review.
+- Python diagnostics use a module logger; browser bridge errors use the developer console. Live platform logging access is unverified.
+- MIT licensing is included, but public Qollab publication, public repository URL, final dependency disclosures, 2–3 minute demo video and event submission remain delivery tasks. Do not treat this slice as published or hackathon-complete.
+
+## Attribution
+
+- Algorithm and analogy: notebook content supplied by the team, integrated without replacing the dynamic correction protocol.
+- Quantum construction/simulation/plots: [Qiskit](https://qiskit.org/) and [Aer](https://qiskit.github.io/qiskit-aer/); Python requires `qiskit[visualization]>=2.5.2,<3.0.0` and `qiskit-aer==0.17.2`. The visualization extra brings Matplotlib/pylatexenc and other transitive dependencies; see installed package metadata for their licenses. Qollab project availability remains unverified.
+- Equation styling: [KaTeX 0.16.22](https://katex.org/), loaded as CSS from jsDelivr for existing equation markup.
+- Palette: [Catppuccin Mocha](https://github.com/catppuccin/catppuccin).
+- Development assistance: OpenCode and AI-assisted implementation/review; educational ownership remains with the team.
 
 This effort is supported by Qollab & IonQ.
 
----
+## License
 
-### Contexto
-
-La página introduce la transmisión clásica, el desafío de la copia y la medición cuánticas, y la teletransportación antes de presentar las vistas Ejemplo, Matemáticas y Código. Las cinco etiquetas de la analogía son solo una estructura inicial; el equipo aportará la explicación y sus límites.
-
----
-
-### Interfaz
-
-- Una página con desplazamiento vertical y enlaces a sus secciones.
-- Un cuadro de estudio con tres pestañas de colores: Ejemplo, Matemáticas y Código.
-- Colores Catppuccin Mocha y CSS nativo adaptable.
-- Marcadores verticales para explicación → código → salida.
-- Un estado de ejecución `Pendiente` visible; ningún marcador se presenta como un resultado calculado.
-
----
-
-### Arquitectura
-
-Las plantillas estáticas se encuentran en `frontend/`. `main.js` las monta y controla las interacciones del navegador. `backend/teleportation.py` define el futuro límite de ejecución con Qollab. Consulta [la arquitectura](docs/architecture.md) y [la guía de desarrollo](docs/development.md).
-
----
-
-### Ejecución
-
-Para obtener una vista previa local de la interfaz, ejecuta:
-
-```bash
-python3 -m http.server 8000
-```
-
-Después, abre <http://localhost:8000>. Esta vista previa no ejecuta Qiskit.
-
-En Qollab, carga el proyecto, selecciona un backend y presiona **Ejecutar**. La ejecución cuántica seguirá pendiente hasta que se añada el circuito del cuaderno.
-
----
-
-### Salidas
-
-La vista Código reserva contenedores de texto para la preparación del estado, el entrelazamiento y la ejecución. Una futura llamada correcta a `run_teleportation(backend)` devolverá esas tres salidas de texto en un diccionario simple. Hasta entonces, todos los contenedores permanecerán como `Pendiente`.
-
----
-
-### Límites actuales
-
-- No se incluyen la narrativa educativa original, las ecuaciones, la correspondencia de la analogía ni los fragmentos del cuaderno.
-- El trabajo cuántico no se envía deliberadamente y no se fabrica ningún resultado.
-- El comportamiento del puente de Qollab, la visibilidad de fallos controlados y la ejecución en el simulador local y en IonQ **no están verificados para este proyecto**.
-- La compatibilidad de los circuitos dinámicos con el backend de IonQ seleccionado requiere una prueba explícita en la plataforma.
-- Los resultados de aprendizaje requieren una revisión humana después de que el equipo añada el contenido educativo.
-
----
-
-### Dependencias y atribución
-
-- Python: `qiskit>=2.5.2,<3.0.0`, según lo exige la especificación del proyecto y el intervalo documentado del entorno de ejecución de Qollab.
-- Navegador: CSS de [KaTeX 0.16.22](https://katex.org/) distribuido por [jsDelivr](https://www.jsdelivr.com/) para el marcado de ecuaciones generado en el servidor.
-- Paleta: [Catppuccin Mocha](https://github.com/catppuccin/catppuccin).
-- Asistencia de desarrollo: se utilizaron OpenCode y desarrollo asistido por IA para crear este esqueleto; el material del cuaderno creado por el equipo sigue pendiente.
-
----
-
-### Licencia
-
-Distribuido bajo la [licencia MIT](LICENSE).
+Project code is distributed under the [MIT license](LICENSE). Third-party packages retain their own licenses.

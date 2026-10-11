@@ -2,6 +2,7 @@ import { renderContextSection } from './frontend/context_section.js';
 import { exampleTabTemplate } from './frontend/example_tab.js';
 import { mathTabTemplate } from './frontend/math_tab.js';
 import { codeTabTemplate } from './frontend/code_tab.js';
+import { executeExample } from './frontend/execution_results.js';
 
 const tabIds = ['example-tab', 'math-tab', 'code-tab'];
 
@@ -75,3 +76,14 @@ function initialize() {
 }
 
 initialize();
+void executeExample(async () => {
+  let bridge;
+  try {
+    bridge = await import('./qollab_bridge.js');
+  } catch (cause) {
+    const error = new Error('The Qollab Python bridge could not be loaded.', { cause });
+    error.code = 'QOLLAB_RUNTIME_UNAVAILABLE';
+    throw error;
+  }
+  return bridge.runWholeExample();
+});
