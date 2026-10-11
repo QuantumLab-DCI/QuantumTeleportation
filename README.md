@@ -2,10 +2,10 @@
   <h1>Quantum Teleportation</h1>
   <p><strong>An educational native web project for exploring quantum teleportation on Qollab.</strong></p>
   <p>
-    <a href="https://qollab.xyz/"><img src="https://img.shields.io/badge/Qollab-Execution-89b4fa?style=for-the-badge" alt="Qollab execution target"></a>
-    <a href="https://qiskit.org/"><img src="https://img.shields.io/badge/Qiskit-2.5.2%20to%20%3C3.0-6929C4?style=for-the-badge&logo=qiskit&logoColor=white" alt="Qiskit 2.5.2 to below 3.0"></a>
-    <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-Qollab_Runtime-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python in the Qollab runtime"></a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"><img src="https://img.shields.io/badge/JavaScript-Native-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="Native JavaScript"></a>
+    <a href="https://qollab.xyz/"><img src="https://img.shields.io/badge/Qollab-Execution-89b4fa.svg?style=for-the-badge" alt="Qollab execution target"></a>
+    <a href="https://qiskit.org/"><img src="https://img.shields.io/badge/Qiskit-2.5.2%20to%20%3C3.0-6929C4.svg?style=for-the-badge&logo=qiskit&logoColor=white" alt="Qiskit 2.5.2 to below 3.0"></a>
+    <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-Qollab%20Runtime-3776AB.svg?style=for-the-badge&logo=python&logoColor=white" alt="Python in the Qollab runtime"></a>
+    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"><img src="https://img.shields.io/badge/JavaScript-Native-F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black" alt="Native JavaScript"></a>
   </p>
   <p>
     <a href="#context">Context</a> ·

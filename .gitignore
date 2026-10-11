@@ -1,0 +1,7 @@
+# Local OpenCode configuration
+.opencode/
+AGENTS.md
+
+# Python-generated files
+__pycache__/
+*.py[cod]
