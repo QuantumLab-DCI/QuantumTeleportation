@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quantum Teleportation</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-5TcZemv2l/9On385z///+d7MSYlvIEw9FuZTIdZ14vJLqWphw7e7ZPuOiCHJcFCP" crossorigin="anonymous">
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>Quantum Teleportation</h1>
+      <nav aria-label="Page sections">
+        <a href="#context">Context</a>
+        <a href="#quantum-challenge">Quantum Challenge</a>
+        <a href="#teleportation">Teleportation</a>
+        <a href="#study-box" data-tab-target="example-panel">Example</a>
+        <a href="#study-box" data-tab-target="math-panel">Math</a>
+        <a href="#study-box" data-tab-target="code-panel">Code</a>
+      </nav>
+    </header>
+
+    <main>
+      <div id="context-mount" class="mount-point"></div>
+
+      <section id="study-box" class="study-box" aria-label="Teleportation study materials">
+        <div class="tab-strip" role="tablist" aria-label="Study views">
+          <button id="example-tab" type="button" role="tab" aria-selected="true" aria-controls="example-panel" tabindex="0" data-tab-target="example-panel">Example</button>
+          <button id="math-tab" type="button" role="tab" aria-selected="false" aria-controls="math-panel" tabindex="-1" data-tab-target="math-panel">Math</button>
+          <button id="code-tab" type="button" role="tab" aria-selected="false" aria-controls="code-panel" tabindex="-1" data-tab-target="code-panel">Code</button>
+        </div>
+        <div id="example-mount" class="mount-point"></div>
+        <div id="math-mount" class="mount-point"></div>
+        <div id="code-mount" class="mount-point"></div>
+      </section>
+    </main>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

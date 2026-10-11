@@ -29,7 +29,7 @@ quantum-teleportation/
 ```
 
 - `index.html`: page shell, centered header, navigation links, and section containers.
-- `main.js`: mount sections, select tabs, navigate to anchors, and coordinate one Python execution.
+- `main.js`: mount sections and coordinate one Python execution. Native links handle section navigation.
 - `main.css`: shared styles, divided by descriptive comments.
 - Each frontend module contains its section's HTML as a JavaScript template string and any simple interactions it needs.
 - `backend/teleportation.py`: notebook-derived Python logic and returned outputs. This folder is a logical separation; Qollab runs Python in the browser.
@@ -38,25 +38,26 @@ quantum-teleportation/
 ## 3. Page and navigation requirements
 
 - **FR-01:** Render one long page with normal vertical scrolling.
-- **FR-02:** Start with the centered title `Quantum Teleportation` and links: `Context`, `Quantum Challenge`, `Teleportation`, `Example`, `Math`, and `Code`. The header contains only the title and these links.
+- **FR-02:** Start with the centered title `Quantum Teleportation` and ordinary anchor links: `Context`, `Quantum Challenge`, `Teleportation`, `Example`, `Math`, and `Code`.
 - **FR-03:** Present classical copying/transmission, the quantum copying/measurement problem, and the introduction to teleportation, in that order.
-- **FR-04:** End with exactly three tab buttons: `Example`, `Math`, and `Code`. Select `Example` initially and show one panel at a time.
-- **FR-05:** Navigation links scroll to their section. Links to a tab select that tab before scrolling to its panel.
-- **FR-06:** Show the five analogy steps vertically in `Example`: establish the connection, prepare the message, finalize the letter, send the letter, and reorder/read. All five are visible together within the selected panel.
+- **FR-04:** End with one study box containing exactly three tabs: `Example`, `Math`, and `Code`. Select `Example` initially and show one colored panel at a time.
+- **FR-05:** Context links use browser-native same-page navigation. Links to `Example`, `Math`, or `Code` select that tab and scroll to the shared study box.
+- **FR-06:** Show the five analogy steps vertically in `Example`: establish the connection, prepare the message, finalize the letter, send the letter, and reorder/read. All five are visible together.
 - **FR-07:** Present mathematical explanations and equations vertically in `Math`; use KaTeX for LaTeX rendering.
 - **FR-08:** Present repeated explanation → Python code → output blocks vertically in `Code`. Start with placeholder blocks for state preparation, entanglement, and execution. The team can add blocks following the same pattern.
-- **FR-09:** Selecting tabs preserves results and does not rerun Python. Step navigation buttons are outside this version's scope.
+- **FR-09:** Tab and anchor navigation never runs Python or clears execution results. Step navigation buttons are outside this version's scope.
 
 The skeleton uses short, clearly marked content placeholders. The team writes the final narrative and notebook explanation. Preserve the relationship between the five analogy steps and the six protocol steps; explain the analogy's limits when adding the final content.
 
 ## 4. Styling requirements
 
-Use Catppuccin Mocha with system fonts, readable spacing, simple buttons, and a single-column layout. Keep all shared CSS in `main.css`.
+Use Catppuccin Mocha with system fonts, readable spacing, and a restrained single-column study-notes layout. Keep all shared CSS in `main.css`.
 
 - Page background: Base `#1e1e2e`.
-- Example panel: Base `#1e1e2e`; Math panel: Surface0 `#313244`; Code panel: Surface1 `#45475a`.
+- Use one centered reading column. Keep the introductory sections simple, then place Example/Math/Code in one bordered study box with a three-tab strip.
+- Example uses Base `#1e1e2e`, Math uses Surface0 `#313244`, and Code uses Surface1 `#45475a`.
 - Main text: Text `#cdd6f4`.
-- Tab selection has a visible indicator as well as its label. Provide keyboard operation and visible focus; respect reduced-motion preferences if animation is added.
+- Native links have visible keyboard focus; respect reduced-motion preferences for smooth scrolling.
 - Wrap prose and equations appropriately; allow horizontal scrolling inside long code/output blocks without making the whole page overflow.
 
 Organize CSS with these comments:
@@ -68,7 +69,7 @@ Organize CSS with these comments:
 /* Header and section links */
 /* Shared elements */
 /* Context section */
-/* Tab buttons and panels */
+/* Tab buttons and study box */
 /* Example tab */
 /* Math tab */
 /* Code tab */
@@ -117,13 +118,13 @@ Qollab requires `index.html` and `main.js` at the project root; it automatically
 The skeleton is ready for team development when:
 
 - [ ] Qollab recognizes the project and renders the page.
-- [ ] The header links navigate correctly, including selecting the destination tab.
-- [ ] Context appears before the final interactive section.
-- [ ] Exactly three tabs exist, with Example initially selected.
-- [ ] Each panel is vertical and uses its assigned background.
+- [ ] The six header links navigate correctly, including selecting Example, Math, or Code.
+- [ ] Context, Quantum Challenge, and Teleportation appear before one tabbed study box.
+- [ ] Exactly three accessible tabs exist, with Example initially selected and one panel visible at a time.
+- [ ] Each panel uses its assigned Catppuccin color without turning every introductory section into a card.
 - [ ] Five example placeholders, mathematical placeholders, and code/output placeholders are present.
 - [ ] A sample equation renders and Python text preserves its formatting.
-- [ ] Tabs work by keyboard and the page remains readable on a narrow screen.
+- [ ] Tabs and links work by keyboard and the page remains readable on a narrow screen.
 - [ ] Execution states and output containers are wired without fabricating results.
 - [ ] Each contributor can edit their assigned module independently.
 
@@ -145,3 +146,44 @@ Before hackathon submission:
 - [Publish a version](https://qollab.xyz/learn/docs/publish)
 - [Catppuccin palette](https://github.com/catppuccin/catppuccin)
 - [KaTeX browser usage](https://katex.org/docs/browser.html)
+
+## 9. Initial skeleton implementation plan
+
+### Design status
+
+**READY for one tabbed study box (2026-10-11).** The user clarified that only the final Example/Math/Code area should be one colored tabbed box; the introductory page remains a simple notes layout. Independent QA confirmed the requirements, accessibility model, stable output IDs, and no-rerun lifecycle are sufficient for implementation. Qollab/IonQ execution remains explicitly **NOT VERIFIED**.
+
+### Tasks and traceability
+
+| ID | Requirements | Owner | Allowed files | Inputs / outputs | Dependencies | Acceptance and checks |
+| --- | --- | --- | --- | --- | --- | --- |
+| T-01 | FR-01–FR-09 | ux-frontend | `index.html`, `main.css`, `frontend/*.js` | Tab panels and stable mount/output IDs | This spec and architecture | DOM inspection; keyboard tabs; narrow viewport; sample KaTeX equation |
+| T-02 | Execution contract, AC execution wiring | quantum | `backend/*.py` | `backend` input; required plain-data dictionary when implemented | Verified bridge form; team notebook content | Python syntax/import checks; pending implementation must raise clearly rather than fabricate output |
+| T-03 | FR-05, FR-09, execution states | coordinator | `main.js` | Templates, tab events, and future Python result | T-01 and T-02 interfaces | Syntax/static checks; no execution from navigation; pending state visible |
+| T-04 | Dependencies and delivery docs | coordinator | `requirements.txt`, `README.md`, `LICENSE`, `docs/*`, `specs/project.md` | Verified project decisions | T-01–T-03 | Links/content review; exact dependency range; MIT text and required attribution |
+| T-05 | All skeleton acceptance criteria | qa | `tests/*`, `docs/qa/*` if needed | Integrated tree | T-01–T-04 | Independent PASS/FAIL/NOT VERIFIED release review |
+
+### Additional observable checks
+
+- Tabs use the ARIA tab pattern with visible focus and Left/Right/Home/End keyboard selection.
+- Review at a 320 CSS-pixel viewport; only code/output containers may scroll horizontally.
+- Output insertion is text-only and follows the DOM's three block IDs.
+- Once notebook execution is enabled, bridge rejection or malformed data produces `Error`, one technical console report, and a concise user message while navigation remains usable. The pending-first skeleton does not invoke its deliberately incomplete Python function.
+- Project initialization owns the only execution attempt; tab and anchor events cannot rerun it.
+
+### Skeleton verification evidence (2026-10-11)
+
+- **PASS:** `git diff --check`; Python compilation and controlled pending `RuntimeError`; JavaScript syntax checks for `main.js` and every frontend module.
+- **PASS (superseded skeleton evidence):** the earlier tabbed skeleton passed its static structure checks before the continuous-layout redesign. This is historical evidence, not evidence for the current interface.
+- **NOT VERIFIED:** rendered browser behavior at 320 CSS pixels, Qollab project recognition/module loading, bridge conversion and diagnostics, the Qollab local simulator, IonQ execution, quantum correctness, and human learning outcomes.
+
+### Superseded continuous layout evidence (2026-10-11)
+
+- **Historical only:** QA reviewed and checked the intermediate all-sections-visible design. The later user clarification superseded that presentation; these results are not current release evidence.
+- **NOT VERIFIED:** rendered behavior at 320 CSS pixels, live anchor/keyboard/KaTeX behavior, Qollab loading and bridge conversion, controlled platform failure diagnostics, the Qollab local simulator, IonQ execution, dynamic-circuit compatibility, quantum correctness, and human learning outcomes.
+
+### Tabbed study-box evidence (2026-10-11)
+
+- **PASS (independent static review):** one study box, exactly three reciprocally associated ARIA tabs and panels, Example initially visible, exact panel colors, keyboard selection logic, header link selection, five analogy steps, and preserved pending output IDs.
+- **PASS:** JavaScript syntax, Python compilation, and `git diff --check`.
+- **NOT VERIFIED:** rendered browser behavior, 320 CSS-pixel layout, live keyboard/focus/scroll behavior, Qollab bridge behavior, local simulator and IonQ execution, dynamic-circuit compatibility, quantum correctness, and human learning outcomes.

@@ -1,0 +1,172 @@
+/* Catppuccin Mocha palette */
+:root {
+  color-scheme: dark;
+  --base: #1e1e2e;
+  --mantle: #181825;
+  --surface-0: #313244;
+  --surface-1: #45475a;
+  --text: #cdd6f4;
+  --subtext-1: #bac2de;
+  --blue: #89b4fa;
+  --green: #a6e3a1;
+  --yellow: #f9e2af;
+}
+
+/* Base styles and typography */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--base);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+}
+h1, h2, h3, h4 { line-height: 1.25; }
+h2 { margin-top: 0; }
+a { color: var(--blue); }
+
+/* Page layout */
+.site-header,
+main {
+  width: min(100% - 2rem, 46rem);
+  margin-inline: auto;
+}
+.content-section {
+  margin-block: 0;
+  border-top: 1px solid var(--surface-1);
+  padding-block: 3rem;
+  scroll-margin-top: 1rem;
+}
+.mount-point:empty { display: none; }
+
+/* Header and section links */
+.site-header {
+  padding-block: 4rem 2.5rem;
+  text-align: center;
+}
+.site-header h1 { margin: 0 0 1.25rem; }
+.site-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem 1.1rem;
+}
+.site-header a { padding: .25rem; }
+
+/* Shared elements */
+.placeholder-label {
+  margin-bottom: .5rem;
+  color: var(--yellow);
+  font-size: .8rem;
+  font-weight: 750;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.analogy-note,
+.execution-status { color: var(--subtext-1); }
+
+/* Context section */
+.context-panel,
+.challenge-panel,
+.teleportation-panel { background: transparent; }
+
+/* Tab buttons and study box */
+.study-box {
+  margin-block: 1rem 4rem;
+  overflow: hidden;
+  border: 1px solid var(--surface-1);
+  border-radius: .6rem;
+  scroll-margin-top: 1rem;
+}
+.tab-strip {
+  display: flex;
+  overflow-x: auto;
+  background: var(--mantle);
+}
+.tab-strip button {
+  flex: 1 0 auto;
+  min-width: 7rem;
+  border: 0;
+  border-right: 1px solid var(--surface-1);
+  padding: .85rem 1.25rem;
+  background: transparent;
+  color: var(--subtext-1);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.tab-strip button:last-child { border-right: 0; }
+.tab-strip button[aria-selected="true"] {
+  background: var(--surface-0);
+  color: var(--text);
+}
+.study-panel {
+  padding: 2rem;
+  scroll-margin-top: 1rem;
+}
+.study-panel[hidden] { display: none; }
+.study-panel > :first-child { margin-top: 0; }
+.study-panel > :last-child { margin-bottom: 0; }
+
+/* Example tab */
+.example-panel { background: #1e1e2e; }
+.analogy-steps {
+  margin: 1.5rem 0 0;
+  padding-left: 1.5rem;
+}
+.analogy-steps li { padding: .25rem 0 .75rem .4rem; }
+.analogy-steps h4 { margin: 0 0 .25rem; }
+.analogy-steps p { margin: 0; }
+
+/* Math tab */
+.math-panel { background: #313244; }
+.equation-block {
+  max-width: 100%;
+  margin-top: 1.5rem;
+  padding: 1rem 0;
+  overflow-x: auto;
+  text-align: center;
+}
+.katex-display { margin: 0; }
+
+/* Code tab */
+.code-panel { background: #45475a; }
+.code-block-group {
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--surface-1);
+  padding-top: 1.5rem;
+}
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--surface-1);
+  border-radius: .35rem;
+  padding: 1rem;
+  background: var(--mantle);
+  color: var(--text);
+  white-space: pre;
+  overflow-wrap: normal;
+}
+.output-block { border-left: .25rem solid var(--yellow); }
+
+/* Responsive styles */
+@media (max-width: 32rem) {
+  .site-header,
+  main { width: calc(100% - 1.5rem); }
+  .site-header { padding-block: 2.5rem 2rem; }
+  .content-section { padding-block: 2.25rem; }
+  .study-panel { padding: 1.25rem; }
+  .analogy-steps { padding-left: 1.25rem; }
+}
+
+/* Accessibility and keyboard focus */
+:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
