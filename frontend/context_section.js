@@ -10,7 +10,7 @@
 
 export function renderContextSection() {
   return `
-    <article class="context-container">
+    <article id="context" class="context-container">
       <header class="context-header">
         <h2>¿Qué hay de cuántica detrás de esta historia?</h2>
         <p class="context-intro">
@@ -44,7 +44,7 @@ export function renderContextSection() {
         </section>
 
         <!-- 2. Preparar el mensaje -->
-        <section class="context-card">
+        <section id="quantum-challenge" class="context-card">
           <div class="card-badge">2. Preparar el mensaje</div>
           <h3>La Carta Hecha a Mano: Qubits y el Teorema de No Clonación</h3>
           <p>
@@ -108,7 +108,7 @@ export function renderContextSection() {
         </section>
 
         <!-- 5. Ordenar y leer -->
-        <section class="context-card">
+        <section id="teleportation" class="context-card">
           <div class="card-badge">5. Ordenar y leer</div>
           <h3>Alinear las Páginas: La Reconstrucción Exacta</h3>
           <p>
