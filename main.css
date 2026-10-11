@@ -31,7 +31,7 @@ a { color: var(--blue); }
 /* Page layout */
 .site-header,
 main {
-  width: min(100% - 2rem, 46rem);
+  width: min(100% - 2rem, 72rem);
   margin-inline: auto;
 }
 .content-section {
@@ -122,15 +122,93 @@ main {
 .analogy-steps p { margin: 0; }
 
 /* Math tab */
-.math-panel { background: #313244; }
+.math-panel {
+  background: #313244;
+  font-size: clamp(1.08rem, 1.15vw, 1.22rem);
+  line-height: 1.75;
+}
+.math-panel p,
+.math-panel li { max-width: none; }
+.math-panel ul { padding-left: 1.4rem; }
+.math-panel li + li { margin-top: .45rem; }
+.math-lead {
+  color: var(--text);
+  font-size: 1.15em;
+}
+.math-step {
+  margin-top: 3.5rem;
+  border-top: 1px solid var(--surface-1);
+  padding-top: 2.5rem;
+}
+.math-step > .step-number,
+.math-step > .step-number + h3 {
+  width: 100%;
+  text-align: center;
+}
+.math-step h3 {
+  max-width: 30ch;
+  margin: .35rem auto 2.5rem;
+  color: var(--text);
+  font-size: clamp(1.8rem, 3.6vw, 2.65rem);
+  line-height: 1.18;
+}
+.math-step h4 {
+  margin: 2rem 0 .5rem;
+  color: var(--blue);
+}
+.step-number {
+  display: block;
+  margin: 0 auto;
+  color: var(--yellow);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.math-note {
+  margin-block: 1.5rem;
+  border-left: .25rem solid var(--blue);
+  background: rgb(24 24 37 / 35%);
+}
+.math-note summary {
+  padding: .9rem 2.75rem .9rem 1rem;
+  color: var(--text);
+  font-weight: 750;
+  cursor: pointer;
+}
+.math-note summary::marker { color: var(--blue); }
+.math-note[open] summary {
+  border-bottom: 1px solid var(--surface-1);
+  color: var(--blue);
+}
+.math-note > :not(summary) {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+.math-note > :last-child { margin-bottom: 1rem; }
+.math-example { border-left-color: var(--yellow); }
+.math-example summary::marker { color: var(--yellow); }
+.math-example[open] summary { color: var(--yellow); }
+.math-inline {
+  display: inline-block;
+  white-space: nowrap;
+}
 .equation-block {
   max-width: 100%;
-  margin-top: 1.5rem;
-  padding: 1rem 0;
+  margin-block: 1.5rem;
+  padding: 1rem .25rem;
   overflow-x: auto;
   text-align: center;
 }
 .katex-display { margin: 0; }
+.math-lines { display: inline-block; line-height: 2; }
+.math-grid {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: .65rem 2rem;
+  text-align: left;
+}
+.math-outcomes { text-align: left; }
 
 /* Code tab */
 .code-panel { background: #45475a; }
@@ -160,6 +238,10 @@ pre {
   .content-section { padding-block: 2.25rem; }
   .study-panel { padding: 1.25rem; }
   .analogy-steps { padding-left: 1.25rem; }
+  .math-panel { font-size: 1.05rem; }
+  .math-step { margin-top: 2.75rem; padding-top: 2rem; }
+  .math-note > :not(summary) { margin-right: .75rem; margin-left: .75rem; }
+  .math-grid { grid-template-columns: max-content; }
 }
 
 /* Accessibility and keyboard focus */
