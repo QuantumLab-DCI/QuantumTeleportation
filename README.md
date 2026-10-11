@@ -1,82 +1,45 @@
-# Quantum Teleportation
+# Teletransportación cuántica
 
-**Native educational web project targeting Qollab, with the team's Qiskit teleportation example.**
+**Proyecto web educativo nativo orientado a Qollab, con el ejemplo de teletransportación del equipo en Qiskit.**
 
-[Interface](#interface) · [Execution](#execution) · [Outputs](#outputs) · [Checks](#checks) · [Limits](#limits) · [Attribution](#attribution)
+[Interfaz](#interfaz) · [Ejecución](#ejecución) · [Resultados](#resultados) · [Comprobaciones](#comprobaciones) · [Limitaciones](#limitaciones) · [Atribución](#atribución)
 
-> **Status:** Local dynamic notebook implemented and tested. Live Qollab execution is **NOT VERIFIED**. IonQ does not support this notebook's dynamic conditions; local success is displayed as **Partial**, not a completed platform demonstration.
->
 > This effort is supported by Qollab & IonQ.
 
-## Interface
+## Estado del proyecto
 
-One long page introduces the team's context and analogy, followed by one Catppuccin Mocha study box with Example, Math and Code tabs. Example is selected initially. Existing team-authored Spanish narrative is preserved; the newly integrated notebook explanations and source use English.
+El proyecto quedó como un prototipo en desarrollo. Por falta de tiempo, no se alcanzó a revisar todo el código ni a integrar todo como se esperaba. Quedan mejoras y pruebas pendientes, pero el proceso sirvió al equipo para estudiar el algoritmo y acercarse a la computación cuántica.
 
-The Code tab presents seven vertical explanation → executed Python source → text output → figure blocks. There is no cell editor, per-cell execution or step navigator. Tabs and section links neither run Python nor discard results.
+## Desarrollo y aprendizaje
 
-## Architecture
+Se adaptaron apuntes y ejemplos de código previos de parte del equipo para organizar un recorrido que conectara la explicación conceptual, la analogía, las matemáticas y el código del algoritmo de teleportación. La explicación matemática se trabajó mediante iteraciones con apoyo de IA.
 
-- `index.html`, `main.css`, `frontend/`: page, educational material and display-safe rendering.
-- `main.js`: mounting, native navigation/tab interaction and one Qollab bridge call.
-- `backend/teleportation.py`: circuit construction, two ideal Aer experiments, executable source excerpts and in-memory PNG formatting.
-- `requirements.txt`: Python runtime dependencies.
+El desarrollo comenzó con Spec-Driven Development (SDD) e ingeniería de software agéntica, usando requisitos funcionales y especificaciones para orientar el trabajo con Codex y Claude mediante OpenCode. Después, por el tiempo disponible de los integrantes, se aceleró el trabajo con prompts directos y no se alcanzó a revisar todo el código generado.
 
-See the canonical [architecture and data contract](docs/architecture.md), [requirements and evidence](specs/project.md), [development guide](docs/development.md), and [independent review](docs/qa/notebook-integration.md).
+Aunque ya se tenía un ejemplo sencillo en Qiskit, al adaptarlo e integrarlo en la página quedaron cambios que no eran los esperados, como partes del contenido en inglés, y la integración no se completó correctamente. Las adaptaciones para Qollab e IonQ también quedaron con pruebas pendientes.
 
-## Execution
+Más que nada, fue una instancia de estudio del algoritmo y de conceptos de computación cuántica. Aunque el resultado no quedó tan pulido como se esperaba, el proceso sirvió al equipo para aprender y tener un acercamiento a esta disciplina.
 
-### Qollab target — verification still required
+## Vista previa local
 
-Upload the root files together with `frontend/`, `backend/` and `requirements.txt` to Qollab, select a backend, and Run the whole project. The integration uses the documented static Python namespace import and `run_teleportation.callPromising(backend)`, followed by `toJs()`.
+Desde la carpeta del proyecto:
 
-The entry mounts the page before asynchronously loading `qollab_bridge.js`, which retains the documented Python import and whole-example call. **Dynamic wrapper discovery, project loading, dependency installation, Aer browser execution, conversion and log capture have not been exercised on Qollab.** Loading failures are caught for local preview; Qollab's own preprocessing behavior remains unverified.
-
-The injected backend is retained but receives **zero jobs in this bounded slice**. [IonQ documents that dynamic branches are unsupported on all its targets, including its simulator](https://docs.ionq.com/api-reference/v0.4/openqasm3.md). The UI keeps this limitation visible. Unknown backends remain not verified; they are not assumed compatible. No local result is an IonQ result, and no coherent-control circuit is silently substituted.
-
-### Local Python reproduction
-
-In a Python virtual environment:
-
-```bash
-python3 -m pip install -r requirements.txt
-python3 -m unittest discover -s tests -p test_teleportation.py -v
-python3 -c "from backend.teleportation import run_teleportation; r = run_teleportation(None); print(r['outputs']['classical-bits']); print(r['outputs']['verification']); print(r['platform']['message'])"
+```python
+python3 -m http.server 8000
 ```
 
-The test suite was executed with Python 3.12.3, Qiskit 2.5.2, Aer 0.17.2, Matplotlib 3.11.1 and pylatexenc 2.11. These are observed local versions, not promised Qollab versions. The simulator seed is fixed for reproducible screenshots/counts; it does not change the physical protocol.
+Abrir `http://localhost:8000`. Esto permite consultar la interfaz educativa; no ejecuta el componente Python desde la página.
 
-Run `python3 -m http.server 8000` from the project root and open `http://localhost:8000` for an educational preview. A plain static server does **not** understand the Python import in `qollab_bridge.js`: the page remains usable and Code displays an explicit execution Error. No quantum results are fabricated. Use the independent browser harness described in the development guide for local integration checks; its fake bridge is not platform evidence.
+## Interfaz
 
-## Outputs
+Una página extensa presenta el contexto y la analogía del equipo, seguida de un panel de estudio con la paleta Catppuccin Mocha y las pestañas Example, Math y Code. Example está seleccionada inicialmente. Se conserva la narrativa existente en español escrita por el equipo; las explicaciones y el código fuente del notebook recién integrado están en inglés.
 
-Q = q0 contains `0.6|0⟩ + 0.8|1⟩`; A = q1 is the granddaughter's resource qubit; B = q2 is the grandmother's qubit. Circuit snapshots retain the supplied barriers and show the protocol growing stage by stage. They are construction diagrams, not extra executions or measured intermediate states.
+La pestaña Code presenta siete bloques verticales con la secuencia explicación → código fuente Python ejecutado → salida de texto → figura. No hay editor de celdas, ejecución por celda ni navegador de pasos. Las pestañas y los enlaces a las secciones no ejecutan Python ni descartan los resultados.
 
-1. The first Aer experiment measures Q into c0 and A into c1 over **1024 shots**. Its histogram displays **A Q**, so the four combinations are approximately equally frequent.
-2. The second experiment applies **X if c1=1, then Z if c0=1**, applies the inverse known preparation to B, and measures B into c2 over **1024 shots**. Ideal verification yields `{'0': 1024}`.
+## Limitaciones
 
-The final bar at zero is **after inverse preparation**; before it, B contains the transferred input state. This is a known-state verification, not tomography of an arbitrary unknown state. Separate experiments need not have identical samples. Actual outputs are inserted as text, never executable HTML; validated PNGs carry alt text and provenance captions.
+Se entrega el avance conseguido durante el hackathon como un prototipo en desarrollo. Quedan pendientes la revisión del código y del contenido educativo, mejoras de estructura y mantenibilidad, correcciones de integración y pruebas en Qollab e IonQ.
 
-## Checks
+## Licencia y atribución
 
-Local evidence includes independent branch/phase oracles, dynamic Aer runs, negative controls for missing corrections, PNG decoding, failure envelopes and browser checks. Reproduction and PASS/FAIL/NOT VERIFIED details are maintained in the [QA report](docs/qa/notebook-integration.md) and [spec](specs/project.md), rather than duplicated here.
-
-## Limits
-
-- Full Qollab execution remains unverified; the required IonQ demonstration is blocked by dynamic-branch incompatibility. A separately approved and explicitly labeled platform representation needs design and live verification.
-- The team's other narrative and math modules are preserved. Remaining educational content, consistency between evolving analogy versions and human learning validation need team review.
-- Python diagnostics use a module logger; browser bridge errors use the developer console. Live platform logging access is unverified.
-- MIT licensing is included, but public Qollab publication, public repository URL, final dependency disclosures, 2–3 minute demo video and event submission remain delivery tasks. Do not treat this slice as published or hackathon-complete.
-
-## Attribution
-
-- Algorithm and analogy: notebook content supplied by the team, integrated without replacing the dynamic correction protocol.
-- Quantum construction/simulation/plots: [Qiskit](https://qiskit.org/) and [Aer](https://qiskit.github.io/qiskit-aer/); Python requires `qiskit[visualization]>=2.5.2,<3.0.0` and `qiskit-aer==0.17.2`. The visualization extra brings Matplotlib/pylatexenc and other transitive dependencies; see installed package metadata for their licenses. Qollab project availability remains unverified.
-- Equation styling: [KaTeX 0.16.22](https://katex.org/), loaded as CSS from jsDelivr for existing equation markup.
-- Palette: [Catppuccin Mocha](https://github.com/catppuccin/catppuccin).
-- Development assistance: OpenCode and AI-assisted implementation/review; educational ownership remains with the team.
-
-This effort is supported by Qollab & IonQ.
-
-## License
-
-Project code is distributed under the [MIT license](LICENSE). Third-party packages retain their own licenses.
+El código del equipo se distribuye bajo la licencia MIT. 
