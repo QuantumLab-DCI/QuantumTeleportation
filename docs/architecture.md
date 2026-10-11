@@ -2,7 +2,7 @@
 
 ## Status
 
-**READY for one tabbed study box.** Independent QA confirmed the clarified presentation, accessibility, stable output IDs, and no-rerun lifecycle are sufficient for implementation. The documented Qollab bridge remains unchanged; real Qollab and IonQ execution remain unverified.
+**READY for one tabbed study box with Spanish presentation.** Independent QA confirmed the localized presentation preserves accessibility, stable output IDs, and the no-rerun lifecycle. User-facing copy and accessible names are Spanish; source identifiers, filenames, comments, contract keys, and the Qollab bridge remain unchanged. Real Qollab and IonQ execution remain unverified.
 
 ## Components and dependency direction
 
